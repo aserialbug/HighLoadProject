@@ -1,0 +1,44 @@
+networks:
+  user-service-network:
+    driver: bridge
+services:
+  api:
+    container_name: api
+    build: 
+      context: UserService/.
+      dockerfile: Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__PostgreSqlContext: "Host=db;Username=postgres;Password=example;Database=UserService"
+    ports:
+      - 8080:80
+    networks:
+      - user-service-network
+    depends_on:
+      - db
+    volumes:
+      - ./Keys/PrivateKey.pem:/app/Keys/PrivateKey.pem:ro
+  db:
+    container_name: db
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: UserService
+    ports:
+      - 5432:5432
+    networks:
+      - user-service-network
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+  adminer:
+    container_name: db-frontend
+    image: adminer
+    restart: always
+    ports:
+      - 8000:8080
+    networks:
+      - user-service-network
+volumes:
+  pg-data: {}
