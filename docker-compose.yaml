@@ -18,6 +18,8 @@ services:
       - db
     volumes:
       - ./Keys/PrivateKey.pem:/app/Keys/PrivateKey.pem:ro
+      - ./Migrations/Migrations.xml:/app/Migrations.xml:ro
+      - ./Configuration/appsettings.json:/app/appsettings.json:ro
   db:
     container_name: db
     image: postgres:latest
