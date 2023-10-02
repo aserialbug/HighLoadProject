@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "95feb90e-ced9-456a-9949-e19661807cb4",
+		"_postman_id": "36f178fe-cf87-460e-b0d2-3c6a21b1dc5a",
 		"name": "UserService",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "9731338"
@@ -217,7 +217,7 @@
 							"_postman_previewlanguage": "text",
 							"header": [],
 							"cookie": [],
-							"body": ""
+							"body": null
 						},
 						{
 							"name": "Server Error",
@@ -254,7 +254,7 @@
 							"_postman_previewlanguage": "text",
 							"header": [],
 							"cookie": [],
-							"body": ""
+							"body": null
 						}
 					]
 				}
@@ -432,7 +432,7 @@
 									"_postman_previewlanguage": "text",
 									"header": [],
 									"cookie": [],
-									"body": ""
+									"body": null
 								},
 								{
 									"name": "Server Error",
@@ -470,7 +470,7 @@
 									"_postman_previewlanguage": "text",
 									"header": [],
 									"cookie": [],
-									"body": ""
+									"body": null
 								}
 							]
 						}
@@ -505,7 +505,8 @@
 											"variable": [
 												{
 													"key": "id",
-													"value": "<string>"
+													"value": "<string>",
+													"description": "(Required) "
 												}
 											]
 										}
@@ -655,7 +656,7 @@
 											"_postman_previewlanguage": "text",
 											"header": [],
 											"cookie": [],
-											"body": ""
+											"body": null
 										},
 										{
 											"name": "Server Error",
@@ -684,9 +685,243 @@
 											"_postman_previewlanguage": "text",
 											"header": [],
 											"cookie": [],
-											"body": ""
+											"body": null
 										}
 									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "search",
+					"item": [
+						{
+							"name": "/User/search",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/User/search?first_name=<string>&last_name=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"User",
+										"search"
+									],
+									"query": [
+										{
+											"key": "first_name",
+											"value": "<string>"
+										},
+										{
+											"key": "last_name",
+											"value": "<string>"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/User/search?first_name=<string>&last_name=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"User",
+												"search"
+											],
+											"query": [
+												{
+													"key": "first_name",
+													"value": "<string>"
+												},
+												{
+													"key": "last_name",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"first_name\": \"<string>\",\n    \"second_name\": \"<string>\",\n    \"age\": \"<integer>\",\n    \"birthdate\": \"<dateTime>\",\n    \"biography\": \"<string>\",\n    \"city\": \"<string>\"\n  },\n  {\n    \"first_name\": \"<string>\",\n    \"second_name\": \"<string>\",\n    \"age\": \"<integer>\",\n    \"birthdate\": \"<dateTime>\",\n    \"biography\": \"<string>\",\n    \"city\": \"<string>\"\n  }\n]"
+								},
+								{
+									"name": "Bad Request",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/User/search?first_name=<string>&last_name=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"User",
+												"search"
+											],
+											"query": [
+												{
+													"key": "first_name",
+													"value": "<string>"
+												},
+												{
+													"key": "last_name",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\"\n}"
+								},
+								{
+									"name": "Not Found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/User/search?first_name=<string>&last_name=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"User",
+												"search"
+											],
+											"query": [
+												{
+													"key": "first_name",
+													"value": "<string>"
+												},
+												{
+													"key": "last_name",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\"\n}"
+								},
+								{
+									"name": "Server Error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/User/search?first_name=<string>&last_name=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"User",
+												"search"
+											],
+											"query": [
+												{
+													"key": "first_name",
+													"value": "<string>"
+												},
+												{
+													"key": "last_name",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "Server Error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/User/search?first_name=<string>&last_name=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"User",
+												"search"
+											],
+											"query": [
+												{
+													"key": "first_name",
+													"value": "<string>"
+												},
+												{
+													"key": "last_name",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"status": "Service Unavailable",
+									"code": 503,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": null
 								}
 							]
 						}
@@ -718,7 +953,7 @@
 	"variable": [
 		{
 			"key": "baseUrl",
-			"value": "/"
+			"value": ""
 		}
 	]
 }
