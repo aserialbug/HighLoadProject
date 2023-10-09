@@ -22,7 +22,7 @@ services:
       - ./Configuration/appsettings.json:/app/appsettings.json:ro
   db:
     container_name: db
-    image: postgres:latest
+    image: postgres:15.4-bullseye
     restart: always
     environment:
       POSTGRES_USER: postgres

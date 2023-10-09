@@ -3,7 +3,8 @@
     <MigrationDefinition>
         <Order>0</Order>
         <Description>Initial tables creation</Description>
-        <Body>CREATE TABLE users (
+        <Body>
+            CREATE TABLE users (
             id          uuid primary key,
             login       text,
             password    text
@@ -11,12 +12,19 @@
 
             create table persons (
             id          uuid primary key,
-            first_name  text,
-            last_name   text,
+            first_name  text collate "ru-RU-x-icu",
+            last_name   text collate "ru-RU-x-icu",
             birthday    date,
             biography   text,
-            city        text
+            city        text collate "ru-RU-x-icu"
             );
+        </Body>
+    </MigrationDefinition>
+	<MigrationDefinition>
+        <Order>1</Order>
+        <Description>Create index for search query</Description>
+        <Body>
+            create index last_first_btree_idx on persons (lower(last_name) text_pattern_ops, lower(first_name) text_pattern_ops);
         </Body>
     </MigrationDefinition>
 </ArrayOfMigrationDefinition>
