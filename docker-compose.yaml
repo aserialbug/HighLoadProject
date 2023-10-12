@@ -1,6 +1,9 @@
 networks:
   user-service-network:
-    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.16.0.0/24"
 services:
   api:
     container_name: api
@@ -9,19 +12,18 @@ services:
       dockerfile: Dockerfile
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      ConnectionStrings__PostgreSqlContext: "Host=db;Username=postgres;Password=example;Database=UserService"
     ports:
       - 8080:80
     networks:
       - user-service-network
     depends_on:
-      - db
+      - primary
     volumes:
       - ./Keys/PrivateKey.pem:/app/Keys/PrivateKey.pem:ro
       - ./Migrations/Migrations.xml:/app/Migrations.xml:ro
       - ./Configuration/appsettings.json:/app/appsettings.json:ro
-  db:
-    container_name: db
+  primary:
+    container_name: primary-db
     image: postgres:15.4-bullseye
     restart: always
     environment:
@@ -29,18 +31,55 @@ services:
       POSTGRES_PASSWORD: example
       POSTGRES_DB: UserService
     ports:
-      - 5432:5432
+      - 5433:5432
     networks:
       - user-service-network
     volumes:
       - pg-data:/var/lib/postgresql/data
+      - ./Configuration/primary/AddReplicatorRole.sql:/docker-entrypoint-initdb.d/AddReplicatorRole.sql:ro
+      - ./Configuration/primary/pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf:rw
+      - ./Configuration/primary/postgresql.conf:/var/lib/postgresql/data/postgresql.conf:rw
+  standby1:
+    container_name: standby1-db
+    image: postgres:15.4-bullseye
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: UserService
+    ports:
+      - 5434:5432
+    networks:
+      - user-service-network
+    volumes:
+      - standby1-pg-data:/var/lib/postgresql/data
+      - ./Configuration/standby1/postgresql.conf:/var/lib/postgresql/data/postgresql.conf:rw
+      - ./Configuration/standby.signal:/var/lib/postgresql/data/standby.signal:rw
+  standby2:
+    container_name: standby2-db
+    image: postgres:15.4-bullseye
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+    ports:
+      - 5435:5432
+    networks:
+      - user-service-network
+    volumes:
+      - standby2-pg-data:/var/lib/postgresql/data
+      - ./Configuration/standby2/postgresql.conf:/var/lib/postgresql/data/postgresql.conf:rw
+      - ./Configuration/standby.signal:/var/lib/postgresql/data/standby.signal:rw
   adminer:
-    container_name: db-frontend
+    container_name: adminer
     image: adminer
     restart: always
     ports:
-      - 8000:8080
+      - 8081:8080
     networks:
       - user-service-network
 volumes:
   pg-data: {}
+  standby1-pg-data: {}
+  standby2-pg-data: {}
+  

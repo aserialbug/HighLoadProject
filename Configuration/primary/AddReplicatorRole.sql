@@ -1,0 +1,1 @@
+﻿create role replicator with login replication password 'secret_password';
